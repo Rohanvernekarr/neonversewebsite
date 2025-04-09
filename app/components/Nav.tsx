@@ -23,7 +23,7 @@ export default function FuturisticNav() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
-              FUTURA
+              NEONVERSE
             </Link>
           </div>
           
@@ -33,7 +33,7 @@ export default function FuturisticNav() {
               {['Home', 'Features', 'Technology', 'Contact'].map((item) => (
                 <Link 
                   key={item} 
-                  href={`/${item.toLowerCase()}`}
+                  href={`#${item.toLowerCase()}`}
                   className="text-gray-300 hover:text-white px-3 py-2 relative group overflow-hidden"
                 >
                   <span className="relative z-10">{item}</span>

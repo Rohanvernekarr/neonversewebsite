@@ -3,10 +3,12 @@
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import FuturisticHero from './components/Hero'
-import FuturisticNav from './components/NAv'
+import FuturisticNav from './components/Nav'
 import FuturisticFeatures from './components/Feature'
 import FuturisticFooter from './components/Footer'
 import SmoothScroll from './components/SmoothScroll'
+import ParticleBackground from './components/ParticleBackground'
+import TechStack from './components/TechStack'
 
 export default function Home() {
   const mainRef = useRef<HTMLDivElement>(null)
@@ -29,10 +31,12 @@ export default function Home() {
   return (
     <SmoothScroll>
       <div ref={mainRef} className="min-h-screen bg-black text-white">
+      <ParticleBackground />
         <FuturisticNav />
         <main>
           <FuturisticHero />
           <FuturisticFeatures />
+          <TechStack />
         </main>
         <FuturisticFooter />
       </div>

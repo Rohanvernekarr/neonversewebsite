@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'react'
 import Link from 'next/link'
 import gsap from 'gsap'
 
+
 export default function FuturisticFooter() {
   const footerRef = useRef<HTMLElement>(null)
   
@@ -28,6 +29,7 @@ export default function FuturisticFooter() {
   
   return (
     <footer ref={footerRef} className="py-12 bg-black relative overflow-hidden">
+     
       {/* Gradient line */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-500 to-transparent opacity-20 mb-12"></div>
       
@@ -43,7 +45,7 @@ export default function FuturisticFooter() {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">FUTURA</h3>
+            <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">NEONVERSE</h3>
             <p className="text-gray-400 mb-4">Building tomorrow's web experiences today.</p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">
