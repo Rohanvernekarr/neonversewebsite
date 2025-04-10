@@ -67,7 +67,7 @@ export default function FuturisticNav() {
           {['Home', 'Features', 'Technology', 'Contact'].map((item, index) => (
             <Link 
               key={item} 
-              href={`/${item.toLowerCase()}`}
+              href={`#${item.toLowerCase()}`}
               className="menu-item block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-900/50"
             >
               {item}

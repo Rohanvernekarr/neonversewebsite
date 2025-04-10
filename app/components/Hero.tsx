@@ -1,21 +1,21 @@
-'use client'
+"use client";
 
-import { useEffect, useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, Sphere } from '@react-three/drei'
-import * as THREE from 'three'
-import gsap from 'gsap'
+import { useEffect, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Sphere } from "@react-three/drei";
+import * as THREE from "three";
+import gsap from "gsap";
 
 // Animated Sun
 function AnimatedSun() {
-  const meshRef = useRef<THREE.Mesh>(null)
+  const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1
-      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15
+      meshRef.current.rotation.x = state.clock.getElapsedTime() * 0.1;
+      meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
-  })
+  });
 
   return (
     <Sphere args={[5, 100, 200]} ref={meshRef}>
@@ -27,7 +27,7 @@ function AnimatedSun() {
         roughness={0.2}
       />
     </Sphere>
-  )
+  );
 }
 
 // Planet with orbit ring, optional moon/ring
@@ -37,46 +37,57 @@ function Planet({
   distance,
   speed,
   hasRing = false,
-  hasMoon = false
+  hasMoon = false,
 }: {
-  size: number
-  color: string
-  distance: number
-  speed: number
-  hasRing?: boolean
-  hasMoon?: boolean
+  size: number;
+  color: string;
+  distance: number;
+  speed: number;
+  hasRing?: boolean;
+  hasMoon?: boolean;
 }) {
-  const planetRef = useRef<THREE.Mesh>(null)
-  const angleRef = useRef(0)
-  const moonRef = useRef<THREE.Mesh>(null)
-  const moonAngleRef = useRef(0)
+  const planetRef = useRef<THREE.Mesh>(null);
+  const angleRef = useRef(0);
+  const moonRef = useRef<THREE.Mesh>(null);
+  const moonAngleRef = useRef(0);
 
   useFrame(() => {
-    angleRef.current += speed
-    moonAngleRef.current += 0.05
+    angleRef.current += speed;
+    moonAngleRef.current += 0.05;
 
     if (planetRef.current) {
-      planetRef.current.position.x = Math.cos(angleRef.current) * distance
-      planetRef.current.position.z = Math.sin(angleRef.current) * distance
-      planetRef.current.rotation.set(0.4, planetRef.current.rotation.y + 0.01, 0)
+      planetRef.current.position.x = Math.cos(angleRef.current) * distance;
+      planetRef.current.position.z = Math.sin(angleRef.current) * distance;
+      planetRef.current.rotation.set(
+        0.4,
+        planetRef.current.rotation.y + 0.01,
+        0
+      );
     }
 
     if (moonRef.current && planetRef.current) {
-      const moonDistance = size + 2
+      const moonDistance = size + 2;
       moonRef.current.position.set(
-        planetRef.current.position.x + Math.cos(moonAngleRef.current) * moonDistance,
+        planetRef.current.position.x +
+          Math.cos(moonAngleRef.current) * moonDistance,
         planetRef.current.position.y,
-        planetRef.current.position.z + Math.sin(moonAngleRef.current) * moonDistance
-      )
+        planetRef.current.position.z +
+          Math.sin(moonAngleRef.current) * moonDistance
+      );
     }
-  })
+  });
 
   return (
     <>
       {/* Orbit path */}
       <mesh rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[distance - 0.05, distance + 0.05, 64]} />
-        <meshBasicMaterial color="white" side={THREE.DoubleSide} transparent opacity={0.2} />
+        <meshBasicMaterial
+          color="white"
+          side={THREE.DoubleSide}
+          transparent
+          opacity={0.6}
+        />
       </mesh>
 
       {/* Planet */}
@@ -86,8 +97,10 @@ function Planet({
 
       {/* Planet Ring like Saturn */}
       {hasRing && (
-        <mesh rotation={[Math.PI / 2, 0, 0]} position={planetRef.current?.position}>
-         
+        <mesh
+          rotation={[Math.PI / 2, 0, 0]}
+          position={planetRef.current?.position}
+        >
           <meshBasicMaterial color="lightgray" side={THREE.DoubleSide} />
         </mesh>
       )}
@@ -99,39 +112,90 @@ function Planet({
         </Sphere>
       )}
     </>
-  )
+  );
+}
+function ShootingStar() {
+  const starRef = useRef<THREE.Mesh>(null);
+
+  // Random initial position
+  const start = useRef({
+    x: Math.random() * 300 - 150,
+    y: Math.random() * 150 + 50,
+    z: Math.random() * 300 - 150,
+    speed: Math.random() * 0.5 + 0.5,
+    dir: new THREE.Vector3(
+      Math.random() * -1,
+      Math.random() * -1,
+      Math.random() * -1
+    ).normalize(),
+  });
+
+  useFrame(() => {
+    if (starRef.current) {
+      starRef.current.position.x += start.current.dir.x * start.current.speed;
+      starRef.current.position.y += start.current.dir.y * start.current.speed;
+      starRef.current.position.z += start.current.dir.z * start.current.speed;
+
+      // Reset if far away
+      if (starRef.current.position.y < -100) {
+        const newX = Math.random() * 300 - 150;
+        const newY = Math.random() * 150 + 50;
+        const newZ = Math.random() * 300 - 150;
+        starRef.current.position.set(newX, newY, newZ);
+      }
+    }
+  });
+
+  return (
+    <Sphere
+      ref={starRef}
+      args={[0.12, 8, 8]}
+      position={[start.current.x, start.current.y, start.current.z]}
+    >
+      <meshBasicMaterial color="white" />
+    </Sphere>
+  );
 }
 
 export default function CosmicExperience() {
-  const heroRef = useRef<HTMLDivElement>(null)
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.hero-title', {
+      gsap.from(".hero-title", {
         duration: 1.2,
         y: 100,
         opacity: 0,
-        ease: 'power4.out',
-        delay: 0.2
-      })
-      gsap.from('.hero-subtitle', {
+        ease: "power4.out",
+        delay: 0.2,
+      });
+      gsap.from(".letter", {
+        y: 100,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 1,
+        ease: "back.out(1.7)",
+        delay: 0.1,
+      });
+
+      gsap.from(".hero-subtitle", {
         duration: 1.2,
         y: 50,
         opacity: 0,
-        ease: 'power4.out',
-        delay: 0.5
-      })
-      gsap.from('.hero-cta', {
+        ease: "power4.out",
+        delay: 0.5,
+      });
+      gsap.from(".hero-cta", {
         duration: 1,
         opacity: 0,
         y: 30,
-        ease: 'power3.out',
-        delay: 0.8
-      })
-    }, heroRef)
+        ease: "power3.out",
+        delay: 0.8,
+      });
+    }, heroRef);
 
-    return () => ctx.revert()
-  }, [])
+    return () => ctx.revert();
+  }, []);
 
   return (
     <div className="relative h-screen w-full">
@@ -141,15 +205,22 @@ export default function CosmicExperience() {
         className="absolute inset-0 z-20 flex items-center justify-start bg-gradient-to-r from-black via-transparent to-black px-6"
       >
         <div className="max-w-2xl space-y-6">
-          <h1 className="hero-title text-5xl md:text-7xl font-bold text-white">
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-              Cosmic Explorer
-            </span>
+          <h1 className="hero-title text-5xl md:text-7xl font-bold text-white ">
+            {"Cosmic Explorer".split("").map((letter, index) => (
+              <span
+                key={index}
+                className="inline-block letter text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 "
+              >
+                {letter === " " ? "\u00A0" : letter}
+              </span>
+            ))}
+            <br />
             Journey Through Space
           </h1>
 
           <p className="hero-subtitle text-xl md:text-2xl text-gray-300">
-            Witness the beauty of our solar system with interactive celestial exploration.
+            Witness the beauty of our solar system with interactive celestial
+            exploration.
           </p>
 
           <div className="hero-cta flex gap-4">
@@ -168,7 +239,7 @@ export default function CosmicExperience() {
         <ambientLight intensity={0.4} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <pointLight position={[-10, -10, -5]} intensity={0.5} color="#8860ff" />
-        <color attach="background" args={['#000']} />
+        <color attach="background" args={["#000"]} />
 
         <AnimatedSun />
 
@@ -184,17 +255,30 @@ export default function CosmicExperience() {
 
         {/* Stars */}
         {[...Array(200)].map((_, i) => (
-          <Sphere key={i} args={[0.2, 16, 16]} position={[
-            (Math.random() - 0.5) * 300,
-            (Math.random() - 0.5) * 300,
-            (Math.random() - 0.5) * 300
-          ]}>
+          <Sphere
+            key={i}
+            args={[0.2, 16, 16]}
+            position={[
+              (Math.random() - 0.5) * 200,
+              (Math.random() - 0.5) * 200,
+              (Math.random() - 0.5) * 200,
+            ]}
+          >
             <meshBasicMaterial color="white" />
           </Sphere>
         ))}
+        {[...Array(30)].map((_, i) => (
+          <ShootingStar key={i} />
+        ))}
 
-        <OrbitControls enableZoom />
+        <OrbitControls
+          enableZoom
+          enableDamping
+          dampingFactor={0.05}
+          maxDistance={120}
+          minDistance={30}
+        />
       </Canvas>
     </div>
-  )
+  );
 }
