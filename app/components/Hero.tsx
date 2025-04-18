@@ -5,6 +5,8 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Sphere } from "@react-three/drei";
 import * as THREE from "three";
 import gsap from "gsap";
+import { useRouter } from "next/navigation";
+
 
 // Animated Sun
 function AnimatedSun() {
@@ -16,6 +18,7 @@ function AnimatedSun() {
       meshRef.current.rotation.y = state.clock.getElapsedTime() * 0.15;
     }
   });
+ 
 
   return (
     <Sphere args={[5, 100, 200]} ref={meshRef}>
@@ -196,6 +199,7 @@ export default function CosmicExperience() {
 
     return () => ctx.revert();
   }, []);
+  const router = useRouter();
 
   return (
     <div className="relative h-screen w-full">
@@ -224,9 +228,12 @@ export default function CosmicExperience() {
           </p>
 
           <div className="hero-cta flex gap-4">
-            <button  className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition">
-              Start Journey
-            </button>
+          <button
+  onClick={() => router.push("/explore")}
+  className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/30 transition"
+>
+  Start Journey
+</button>
             <button className="px-6 py-3 rounded-full border border-white/20 backdrop-blur-sm hover:bg-white/10 text-white transition">
               Learn More
             </button>
@@ -282,3 +289,4 @@ export default function CosmicExperience() {
     </div>
   );
 }
+
