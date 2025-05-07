@@ -37,6 +37,7 @@ export default function FuturisticCard({
   const glowX = mousePosition.x * 100
   const glowY = mousePosition.y * 100
   
+  
   return (
     <div
       ref={cardRef}

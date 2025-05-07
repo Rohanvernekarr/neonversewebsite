@@ -4,7 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { Sphere } from "@react-three/drei";
 import * as THREE from "three";
 
-// ☀️ Animated Sun
+//  Animated Sun
 export function AnimatedSun() {
   const meshRef = useRef<THREE.Mesh>(null);
 
@@ -28,7 +28,7 @@ export function AnimatedSun() {
   );
 }
 
-// 🪐 Planet
+//  Planet
 export function Planet({
   size,
   color,
@@ -119,7 +119,7 @@ export function Planet({
   );
 }
 
-// 🌠 Shooting Star
+// Shooting Star
 export function ShootingStar() {
   const starRef = useRef<THREE.Mesh>(null);
 
@@ -150,7 +150,7 @@ export function ShootingStar() {
     }
   });
 
-  return (
+  return (  
     <Sphere
       ref={starRef}
       args={[0.12, 8, 8]}
