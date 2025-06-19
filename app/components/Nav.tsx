@@ -18,23 +18,23 @@ export default function FuturisticNav() {
   }, [isOpen])
   
   return (
-    <nav className="fixed w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/10">
+    <nav className="fixed w-full z-50 backdrop-blur-md bg-black/50 border-b border-white/10 px-safe">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
+            <Link href="/" className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-500">
               NEONVERSE
             </Link>
           </div>
           
           {/* Desktop menu */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-8">
+            <div className="ml-4 md:ml-10 flex items-baseline space-x-4 md:space-x-8">
               {['Home', 'Features', 'Technology', 'Contact'].map((item) => (
                 <Link 
                   key={item} 
                   href={`#${item.toLowerCase()}`}
-                  className="text-gray-300 hover:text-white px-3 py-2 relative group overflow-hidden"
+                  className="text-gray-300 hover:text-white px-3 py-2 md:px-4 md:py-2 text-base md:text-lg relative group overflow-hidden rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <span className="relative z-10">{item}</span>
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
@@ -44,10 +44,12 @@ export default function FuturisticNav() {
           </div>
           
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="bg-black/20 p-2 rounded-md text-gray-400 hover:text-white"
+              className="bg-black/20 p-3 rounded-md text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ minWidth: 44, minHeight: 44 }}
+              aria-label="Open menu"
             >
               <span className="sr-only">Open menu</span>
               <div className="w-6 h-0.5 bg-current mb-1.5 transition-all duration-300 ease-out transform origin-left"
@@ -63,12 +65,13 @@ export default function FuturisticNav() {
       
       {/* Mobile menu */}
       <div className={`md:hidden ${isOpen ? 'block' : 'hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md">
+        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md rounded-b-xl">
           {['Home', 'Features', 'Technology', 'Contact'].map((item, index) => (
             <Link 
               key={item} 
               href={`#${item.toLowerCase()}`}
-              className="menu-item block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-900/50"
+              className="menu-item block px-4 py-3 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-900/50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              style={{ minWidth: 44, minHeight: 44 }}
             >
               {item}
             </Link>
