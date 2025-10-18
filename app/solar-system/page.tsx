@@ -2,10 +2,40 @@
 
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars } from '@react-three/drei';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
+
+interface PlanetDetails {
+  diameter: string;
+  distanceFromSun: string;
+  orbitalPeriod: string;
+  surfaceTemperature: string;
+  funFact: string;
+}
+
+interface Moon {
+  name: string;
+  radius: number;
+  distance: number;
+  speed: number;
+  color: string;
+  texture?: string;
+}
+
+interface Planet {
+  name: string;
+  radius: number;
+  distance: number;
+  color: string;
+  speed: number;
+  texture: string;
+  moons?: Moon[];
+  details: PlanetDetails;
+  onClick?: () => void;
+}
+
 import Planet from './Planet';
 
-const planetData = [
+const planetData: Planet[] = [
   {
     name: 'Mercury',
     radius: 0.4,
@@ -24,10 +54,10 @@ const planetData = [
   },
   {
     name: 'Venus',
-    radius: 0.9,
-    distance: 7,
-    color: '#E6E6FA',
-    speed: 0.03,
+    radius: 0.6,
+    distance: 8,
+    color: '#DEB887',
+    speed: 0.015,
     texture: '/textures/venus.jpg',
     moons: [],
     details: {
@@ -40,10 +70,10 @@ const planetData = [
   },
   {
     name: 'Earth',
-    radius: 1,
-    distance: 10,
-    color: '#4169E1',
-    speed: 0.02,
+    radius: 0.6,
+    distance: 11,
+    color: '#1E90FF',
+    speed: 0.01,
     texture: '/textures/earth.jpg',
     moons: [
       { name: 'Moon', radius: 0.27, distance: 1.5, speed: 0.08, color: '#ccc', texture: '/textures/moon.jpg' }
@@ -147,11 +177,11 @@ const planetData = [
 ];
 
 export default function SolarSystemPage() {
-  const [selectedPlanet, setSelectedPlanet] = useState(null);
+  const [selectedPlanet, setSelectedPlanet] = useState<Planet | null>(null);
 
   return (
     <div className="w-full h-screen relative bg-black">
-      <audio src="/audio/space-ambience.mp3" autoPlay loop volume={0.2} />
+      <audio src="/audio/space-ambience.mp3" autoPlay loop  />
       <Canvas camera={{ position: [0, 20, 40], fov: 60 }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[0, 0, 0]} intensity={1.2} />

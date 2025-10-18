@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 import { useSpring, animated } from '@react-spring/three';
+import * as THREE from 'three';
 
 interface Moon {
   name: string;

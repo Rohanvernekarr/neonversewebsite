@@ -71,18 +71,18 @@ function FeatureCard({ title, description, color, index }: FeatureCardProps) {
       {/* Glowing Background Effect */}
       <div className="absolute -inset-[2px] bg-gradient-to-tr from-white/10 via-transparent to-white/5 rounded-2xl blur-sm opacity-30 pointer-events-none" />
 
-      {/* Icon area */}
+     
       <div className={`relative w-14 h-14 mb-6 rounded-xl flex items-center justify-center ${color} group-hover:scale-110 transition-transform duration-300`}>
         <div className="w-7 h-7 bg-white/80 rounded-full shadow-md group-hover:rotate-12 transition-transform duration-300"></div>
       </div>
 
-      {/* Title */}
+    
       <h3 className="text-xl font-bold text-white mb-3">{title}</h3>
 
-      {/* Description */}
+     
       <p className="text-gray-400">{description}</p>
 
-      {/* Link */}
+      
       <div className="mt-6 flex items-center">
         <a
           href="#"
